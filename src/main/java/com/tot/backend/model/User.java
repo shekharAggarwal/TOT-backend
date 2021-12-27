@@ -12,7 +12,9 @@ import java.time.LocalDateTime;
 @Table(name = "user")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "user")
+    @TableGenerator(name = "user", table = "hibernate_sequences", allocationSize = 1)
+    @Column(nullable = false)
     private Long id;
 
     @Column(nullable = false)

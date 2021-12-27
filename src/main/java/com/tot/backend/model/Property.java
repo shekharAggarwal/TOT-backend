@@ -13,7 +13,9 @@ import java.time.LocalDateTime;
 public class Property {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "property")
+    @TableGenerator(name = "property", table = "hibernate_sequences", allocationSize = 1)
+    @Column(nullable = false)
     private Long pid;
 
     private Long owner_id;

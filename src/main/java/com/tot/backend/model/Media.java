@@ -11,7 +11,9 @@ import javax.persistence.*;
 @Setter
 public class Media {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "media")
+    @TableGenerator(name = "media", table = "hibernate_sequences", allocationSize = 1)
+    @Column(nullable = false)
     private Long mid;
 
     private String model_id;

@@ -12,7 +12,9 @@ import java.time.LocalDateTime;
 @Setter
 public class Room {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "room")
+    @TableGenerator(name = "room", table = "hibernate_sequences", allocationSize = 1)
+    @Column(nullable = false)
     private Long rid;
 
     private Long pid;

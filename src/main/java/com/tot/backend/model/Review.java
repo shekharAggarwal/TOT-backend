@@ -11,7 +11,9 @@ import javax.persistence.*;
 @Table(name = "review")
 public class Review {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "review")
+    @TableGenerator(name = "review", table = "hibernate_sequences", allocationSize = 1)
+    @Column(nullable = false)
     private Long id;
 
     private Long review_id;
