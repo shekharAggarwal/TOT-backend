@@ -31,10 +31,10 @@ public class UserService {
 
     public ResponseEntity<Object> login(String username, String password) {
         User user = userRepository.login(username, password);
-        user.setPassword(null);
-        if (user.getEmail() != null || !user.getEmail().equals(""))
+        if (user != null && (user.getEmail() != null || !user.getEmail().equals(""))) {
+            user.setPassword(null);
             return new ResponseEntity<>(user, HttpStatus.OK);
-        else
+        } else
             return new ResponseEntity<>("User Not Found", HttpStatus.UNAUTHORIZED);
     }
 

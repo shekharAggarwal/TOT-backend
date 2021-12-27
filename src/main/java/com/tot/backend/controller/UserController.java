@@ -31,5 +31,4 @@ public class UserController {
     public ResponseEntity<Object> changePassword(@RequestParam Long id, @RequestParam String currentPassword, @RequestParam String newPassword) {
         return userService.changePassword(id, currentPassword, newPassword);
     }
-
 }
