@@ -3,13 +3,19 @@ package com.tot.backend.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
+
 @Getter
 @Setter
 public class UserDto {
-    private String name;
+    @NotBlank
+    private String firstName;
+    private String lastName;
+    @NotBlank
     private String email;
+    @NotBlank
     private String password;
+    @NotBlank
     private String phone_number;
     private String description;
-//    private LocalDateTime email_verified_at;
 }
