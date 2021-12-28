@@ -6,12 +6,18 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
-public interface UserRepository extends JpaRepository<User, Long> {
-    @Query("SELECT u FROM User u WHERE u.email=?1 and u.password=?2")
-    User login(String username, String password);
+import java.util.Optional;
 
+public interface UserRepository extends JpaRepository<User, Long> {
     @Transactional
     @Modifying
-    @Query("UPDATE User u SET u.password=?3 WHERE u.id=?1 and u.password=?2")
-    int changePassword(Long id, String currentPassword, String newPassword);
+    @Query("UPDATE User u SET u.password=?2 WHERE u.email=?1 ")
+    int changePassword(String id, String newPassword);
+
+
+    Optional<User> findByEmail(String email);
+
+    Boolean existsByPhoneNumber(String phoneNumber);
+
+    Boolean existsByEmail(String email);
 }

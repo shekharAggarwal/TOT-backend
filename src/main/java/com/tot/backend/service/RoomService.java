@@ -1,6 +1,6 @@
 package com.tot.backend.service;
 
-import com.tot.backend.dto.RoomDto;
+import com.tot.backend.payload.request.RoomDto;
 import com.tot.backend.model.Room;
 import com.tot.backend.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;

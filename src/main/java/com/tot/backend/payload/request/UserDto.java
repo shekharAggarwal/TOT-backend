@@ -1,4 +1,4 @@
-package com.tot.backend.dto;
+package com.tot.backend.payload.request;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -16,6 +16,6 @@ public class UserDto {
     @NotBlank
     private String password;
     @NotBlank
-    private String phone_number;
+    private String phoneNumber;
     private String description;
 }

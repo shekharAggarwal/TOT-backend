@@ -1,6 +1,6 @@
 package com.tot.backend.service;
 
-import com.tot.backend.dto.ReservationDto;
+import com.tot.backend.payload.request.ReservationDto;
 import com.tot.backend.model.Reservation;
 import com.tot.backend.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;

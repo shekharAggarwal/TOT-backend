@@ -1,6 +1,6 @@
 package com.tot.backend.service;
 
-import com.tot.backend.dto.MediaDto;
+import com.tot.backend.payload.request.MediaDto;
 import com.tot.backend.model.Media;
 import com.tot.backend.repository.MediaRepository;
 import org.springframework.beans.factory.annotation.Autowired;

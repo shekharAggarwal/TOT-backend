@@ -1,6 +1,6 @@
 package com.tot.backend.service;
 
-import com.tot.backend.dto.ReviewDto;
+import com.tot.backend.payload.request.ReviewDto;
 import com.tot.backend.model.Review;
 import com.tot.backend.repository.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
