@@ -6,10 +6,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Component
 public class JwtUtils {
@@ -27,7 +33,15 @@ public class JwtUtils {
     public String generateJwtToken(Authentication authentication) {
 
         UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
+        final Map<String, Object> claims = new HashMap<>();
+
+        final List<String> roles = authentication.getAuthorities()
+                .stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList());
+        claims.put("ROLES", roles);
         return Jwts.builder()
+                .setClaims(claims)
                 .setSubject((userPrincipal.getUsername()))
                 .setIssuedAt(new Date())
                 .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
@@ -60,10 +74,6 @@ public class JwtUtils {
         return false;
     }
 
-    public Date getIssuedAtDateFromToken(String token) {
-        return getClaimFromToken(token, Claims::getIssuedAt);
-    }
-
     public Date getExpirationDateFromToken(String token) {
         return getClaimFromToken(token, Claims::getExpiration);
     }
@@ -87,6 +97,10 @@ public class JwtUtils {
         return false;
     }
 
+    private Date calculateExpirationDate(Date createdDate) {
+        return new Date(createdDate.getTime() + jwtExpirationMs);
+    }
+
     public Boolean canTokenBeRefreshed(String token) {
         return (!isTokenExpired(token) || ignoreTokenExpiration(token));
     }
@@ -107,7 +121,29 @@ public class JwtUtils {
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
-    private Date calculateExpirationDate(Date createdDate) {
-        return new Date(createdDate.getTime() + jwtExpirationMs);
+    //function to get the ip address of request
+    private static String getClientIp(HttpServletRequest request) {
+        String remoteAddr = "";
+        if (request != null) {
+            remoteAddr = request.getHeader("X-FORWARDED-FOR");
+            if (remoteAddr == null || "".equals(remoteAddr)) {
+                remoteAddr = request.getRemoteAddr();
+            }
+        }
+        return remoteAddr;
     }
+
+    //function to get the User Agent of request
+    public static String getUserAgent(HttpServletRequest request) {
+        String ua = "";
+        if (request != null) {
+            ua = request.getHeader("User-Agent");
+        }
+        return ua;
+    }
+
+    public Date getIssuedAtDateFromToken(String token) {
+        return getClaimFromToken(token, Claims::getIssuedAt);
+    }
+
 }
