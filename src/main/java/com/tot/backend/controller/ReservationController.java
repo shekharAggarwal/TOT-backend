@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/api/reservation")
 @RestController
@@ -17,7 +19,7 @@ public class ReservationController {
 
     @PostMapping("/addReservation")
     @PreAuthorize("hasRole('ADMIN') or hasRole('OWNER') or hasRole('USER')")
-    public Reservation addReservation(@RequestBody ReservationDto reservationDto) {
+    public Reservation addReservation(@Valid @RequestBody ReservationDto reservationDto) {
         return reservationService.addReservation(reservationDto);
     }
 

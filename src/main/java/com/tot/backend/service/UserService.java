@@ -77,12 +77,15 @@ public class UserService {
 
     public ResponseEntity<Object> login(LoginDto loginDto) {
         try {
+            //authenticating user
             Authentication authentication = authenticationManager
                     .authenticate(new UsernamePasswordAuthenticationToken(loginDto.getEmail(),
                             loginDto.getPassword()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String jwt = jwtUtils.generateJwtToken(authentication);
+            //getting user details
             UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+            //get user ROLE
             List<String> roles = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
             return new ResponseEntity<>(new LoginResponse(userDetails.getId(), userDetails.getPhoneNumber(), userDetails.getEmail(), userDetails.getDescription(), jwt, "Bearer", roles), HttpStatus.OK);
         } catch (Exception ex) {

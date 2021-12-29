@@ -17,6 +17,7 @@ public class Media {
     private Long mid;
 
     private String model_id;
+    private String model_type;
     private String file_type;
     private String file_name;
 }

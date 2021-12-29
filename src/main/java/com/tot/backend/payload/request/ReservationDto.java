@@ -11,5 +11,4 @@ public class ReservationDto {
     private String password;
     private String phoneNumber;
     private String description;
-//    private LocalDateTime email_verified_at;
 }
